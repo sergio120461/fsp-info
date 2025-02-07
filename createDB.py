@@ -3,7 +3,7 @@ from psycopg2 import sql
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 # Конфигурация подключения
-DB_NAME = "my_database"
+DB_NAME = "EIS_procurements"
 DB_USER = "postgres"
 DB_PASSWORD = "12345"
 DB_HOST = "localhost"
@@ -11,6 +11,14 @@ DB_PORT = "5432"
 
 # SQL для создания таблиц
 TABLES = {
+    "procurements": """
+        CREATE TABLE IF NOT EXISTS procurements (
+            id SERIAL PRIMARY KEY,
+            purchase_n VARCHAR(19) UNIQUE NOT NULL,    -- номер закупки, 44-ФЗ - 19 символов текста, 223 - 11 символов, чтобы не отсекать нули вначале 
+            law INT NOT NULL,   -- ссылка на закон
+
+        )
+    """,
     "users": """
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
